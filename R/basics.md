@@ -89,3 +89,53 @@ mapply(rnorm, 1:3, 1:3, 2)
 ## [[3]]
 ## [1] 0.6485012 3.7339094 1.6486525
 ```
+
+### `tapply`
+
+Apply a function over subsets of a vector.
+
+```R
+x <- c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3, 10)
+f
+## [1] 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3
+## [28] 3 3 3
+## Levels: 1 2 3
+tapply(x, f, mean)
+##          1          2          3 
+## -0.4175986  0.6728019  1.2356494 
+```
+
+### `split`
+
+Split a vector into subsets determined by a factor or a list of factors.
+
+```R
+x <- c(rnorm(3), runif(3), rnorm(3,1))
+f <- gl(3, 3)
+split(x, f)
+## $`1`
+## [1] -0.4379933  0.6602717  1.0666278
+## 
+## $`2`
+## [1] 0.5800965 0.3642840 0.8716409
+## 
+## $`3`
+## [1] -0.2689952 -0.3325070  3.9370044
+
+
+library(datasets)
+head(airquality)
+##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    NA      NA 14.3   56     5   5
+## 6    28      NA 14.9   66     5   6
+sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE))
+##                 5         6          7          8         9
+## Ozone    23.61538  29.44444  59.115385  59.961538  31.44828
+## Solar.R 181.29630 190.16667 216.483871 171.857143 167.43333
+## Wind     11.62258  10.26667   8.941935   8.793548  10.18000
+```
