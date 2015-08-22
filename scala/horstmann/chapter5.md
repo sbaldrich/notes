@@ -1,7 +1,7 @@
 ## Chapter 5
 
 ### Keypoints:
-  * The visibility of the mutator and accesor methods generated (and whether they are generated) is controlled by the use of the `private`, `val`, `var` and `private[this]`. 
+  * The visibility of the mutator and accesor methods generated (and whether they are generated) is controlled by the use of the `private`, `val`, `var` and `private[this]`.
   * Default arguments are ok.
   * Use @BeanProperty to generate the usual JavaBean methods.
   * Nested classes are possible, take a look at the bottom of this file.
@@ -9,18 +9,14 @@
 
 ```scala
 class Counter(private var value : Int = 0){
-  
+
   def increment(){
     if(value < Integer.MAX_VALUE)
       value += 1
   }
-  
+
   def current = value  
 }
-
-var cnt = new Counter(Integer.MAX_VALUE)
-cnt.increment()
-cnt.current
 ```
 
 ```scala
@@ -48,7 +44,7 @@ class Time(val hours : Int, val minutes : Int){
 ```scala
 class Time(hours : Int, minutes : Int){
   val minsSinceMidnight = hours * 60 + minutes;
-  
+
   def before(other : Time) = {
     minsSinceMidnight < other.minsSinceMidnight
   }
@@ -96,9 +92,9 @@ class Network{
     m
   }
 }
-``` 
+```
 
-Now, consider a couple of networks 
+Now, consider a couple of networks
 
 ```scala
 val twatter, footbook = new Network()
