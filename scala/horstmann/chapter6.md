@@ -82,4 +82,4 @@ object Status extends Enumeration{
 ```
 
 
-The type of the enumeration **is not** `Status` it is `Status.Value`. It is possible to use a type alias to make the use of the enumeration with imports a little easier for the eyes.
+The type of the enumeration **is not** `Status`, it is `Status.Value`. It is possible to use a type alias to make the use of the enumeration with imports a little easier for the eyes.
