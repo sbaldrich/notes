@@ -22,7 +22,7 @@ class CheckingAccount(initialBalance : Double) extends BankAccount(initialBalanc
 
 ```scala
 class SavingsAccount(initialBalance : Double) extends BankAccount(initialBalance){
-  
+
   var operations = 0
 
   def charge = {
@@ -41,3 +41,41 @@ class SavingsAccount(initialBalance : Double) extends BankAccount(initialBalance
 }
 ```
 
+```scala
+abstract class Item{
+  def price : Int
+  def description : String
+}
+
+class SimpleItem private(pr : Int, desc : String) extends Item{
+  val price = pr
+  val description = desc
+}
+
+object SimpleItem{
+  def apply(pr : Int, desc : String) = new SimpleItem(pr, desc)
+}
+
+import collection.mutable.ArrayBuffer
+
+class Bundle(val items : ArrayBuffer[Item] = new ArrayBuffer[Item]){
+  def price = items.map(_.price).sum
+  def description = items.map(_.description).mkString(", ")
+}
+```
+
+```scala
+class Point(val x : Int, val y : Int)
+
+class LabeledPoint(val label : String, x : Int, y : Int) extends Point(x, y)
+```
+
+```scala
+abstract class Shape{
+  def centerPoint : Point
+}
+
+class Circle(val center : Point) extends Shape{
+  def centerPoint = center
+}
+```
