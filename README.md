@@ -8,8 +8,9 @@ Notes about things I don't want to forget.
   * Notes from Coursera's [R Programming](http://class.coursera.org/rprog-031) course.
 * scala
   * Notes and exercises from [Cay Horstmann's](http://horstmann.com/) Scala for the Impatient [book](http://www.amazon.com/Scala-Impatient-Cay-S-Horstmann/dp/0321774094/ref=sr_1_1?s=books&ie=UTF8&qid=1439480559&sr=1-1&keywords=scala+for+the+impatient).
-* Dev
+* dev
   * Notes about Software Development
+  * Solutions to problems I've encountered
 
 ## Disclaimer
 
