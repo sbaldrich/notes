@@ -1,9 +1,9 @@
-# Table of Contents
+## Help!
 1. [Maven](#maven)
 
-## Maven
+### Maven
 
-### `mvn compile` says package doesn't exist, but eclipse sees it!
+#### `mvn compile` says package doesn't exist, but eclipse sees it!
 
 
 **Problem**: A project in eclipse runs correctly but when I try to run it from terminal it says there are missing packages.
