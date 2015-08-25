@@ -19,3 +19,25 @@ class CheckingAccount(initialBalance : Double) extends BankAccount(initialBalanc
   override def withdraw(amount : Double) = super.withdraw(amount + 1)
 }
 ```
+
+```scala
+class SavingsAccount(initialBalance : Double) extends BankAccount(initialBalance){
+  
+  var operations = 0
+
+  def charge = {
+    operations += 1
+    if(operations > 3) 1 else 0
+  }
+
+  override def deposit(amount : Double) = {
+    super.deposit(amount - charge)
+  }
+  override def withdraw(amount : Double) = {
+    super.withdraw(amount + charge)
+  }
+
+  def earnMonthlyInterest() {operations = 0}
+}
+```
+
