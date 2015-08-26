@@ -139,3 +139,60 @@ sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE)
 ## Solar.R 181.29630 190.16667 216.483871 171.857143 167.43333
 ## Wind     11.62258  10.26667   8.941935   8.793548  10.18000
 ```
+
+## `str` function
+
+Compactly display the inner structure of R objects.
+
+```R
+x <- rnorm(100, 10)
+str(x)
+
+## num [1:100] 8.38 9.09 9.08 10.15 9.59 ...
+
+library(datasets)
+str(airquality)
+
+## 'data.frame':	153 obs. of  6 variables:
+## $ Ozone  : int  41 36 12 18 NA 28 23 19 8 NA ...
+## $ Solar.R: int  190 118 149 313 NA NA 299 99 19 194 ...
+## $ Wind   : num  7.4 8 12.6 11.5 14.3 14.9 8.6 13.8 20.1 8.6 ...
+## $ Temp   : int  67 72 74 62 56 66 65 59 61 69 ...
+## $ Month  : int  5 5 5 5 5 5 5 5 5 5 ...
+## $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...
+
+m <- matrix(rnorm(100), 10, 10)
+str(m)
+## num [1:10, 1:10] -0.0393 1.1132 2.1891 -0.1054 0.3433 ...
+
+```
+
+## Simulation
+
+### Generating Random Numbers
+
+##### Functions for probability distributions
+
+Probability distributions have four associated functions prefixed with:
+
+* `d`: density
+* `r`: random number generation
+* `p`: cumulative distribution
+* `q`: quantile
+
+*e.g.,* `dnorm, rnorm, pnorm, qnorm, rpois, qpois`
+
+*Remember to always set the seed (`set.seed`) to ensure reproducibility*
+
+##### Random Sampling
+
+Use `sample` to randomly draw from a set scalar objects.
+
+```R
+set.seed(10)
+sample(1:10, 4)
+##  6 3 4 5
+
+sample(1:10, replace=TRUE)
+##  1 3 3 3 7 5 7 6 2 6
+```
