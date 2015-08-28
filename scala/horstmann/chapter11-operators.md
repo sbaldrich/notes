@@ -1,9 +1,10 @@
 ## Chapter 11: Operators
 
-	### Keypoints
-	* Use the `unary_`operator syntax to support unary operators. Only `+ - ! ~` are allowed as *prefix* operators.
-	* The `apply` and `unapply` methods are called when using an object as a function. The called method depends on whether the call is on the left or right side of an assignment.
-	* `unapplySeq` can be used to extract an arbitrary sequence of values. It returns an `Option[Seq[A]]`. See ABN for this chapter.
+### Keypoints
+
+* Use the `unary_`*operator* syntax to support unary operators. Only `+ - ! ~` are allowed as *prefix* operators.
+* The `apply` and `unapply` methods are called when using an object as a function. The called method depends on whether the call is on the left or right side of an assignment.
+* `unapplySeq` can be used to extract an arbitrary sequence of values. It returns an `Option[Seq[A]]`. See ABN for this chapter.
 
 ```scala
 import scala.math.abs
