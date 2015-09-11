@@ -1,3 +1,83 @@
+## Subsetting and Sorting
+
+```R
+set.seed(13435)
+X <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
+X <- X[sample(1:5),];X$var2[c(1,3)] = NA
+X
+
+##   var1 var2 var3
+## 1    2   NA   15
+## 4    1   10   11
+## 2    3   NA   12
+## 3    5    6   14
+## 5    4    9   13
+
+X[,1] ## Get the first column
+
+## [1] 2 1 3 5 4
+
+X[,"var1"] ## Get the "var1" column
+
+## [1] 2 1 3 5 4
+
+X[1:2, "var2"] ## Get the first and second row for the "var2" variable
+
+## [1] NA 10
+
+X[(X$var1 <= 3 & X$var3 > 11),]
+
+##   var1 var2 var3
+## 1    2   NA   15
+## 2    3   NA   12
+
+X[(X$var1 <= 3 | X$var3 > 15),]
+
+##   var1 var2 var3
+## 1    2   NA   15
+## 4    1   10   11
+## 2    3   NA   12
+
+X[which(X$var2 > 8 ),] ## Subset dealing correctly with NA values
+
+##   var1 var2 var3
+## 4    1   10   11
+## 5    4    9   13
+
+sort(X$var2, na.last = T)
+
+## [1]  6  9 10 NA NA
+
+X[order(X$var1,X$var3),]
+
+##   var1 var2 var3
+## 4    1   10   11
+## 1    2   NA   15
+## 2    3   NA   12
+## 5    4    9   13
+## 3    5    6   14
+
+Y <- cbind(X, rnorm(5)) ## Append a new column. Invert the parameter order for prepend.
+
+##   var1 var2 var3    rnorm(5)
+## 1    2   NA   15  0.62578490
+## 4    1   10   11 -2.45083750
+## 2    3   NA   12  0.08909424
+## 3    5    6   14  0.47838570
+## 5    4    9   13  1.00053336
+
+Y <- rbind(X, 1:3) ## Append a new row. Invert the parameter order for prepend. 
+
+##   var1 var2 var3
+## 1    2   NA   15
+## 4    1   10   11
+## 2    3   NA   12
+## 3    5    6   14
+## 5    4    9   13
+## 6    1    2    3
+
+```
+
 ## Functions
 
 In R, functions are defined by using the `function` directive and are **first class objects**. The return value of the function is the value of the last expression in the function body.
@@ -287,7 +367,7 @@ DT[,table(y)]
 
 ##### Append colums:
 
-Use `:=` to add a new variable to a `data.table`. Using a `data.frame`, a copy of the full data frame would be made and the new variable would be appended to it. The `data.table` *does not make a copy when appending!**
+Use `:=` to add a new variable to a `data.table`. Using a `data.frame`, a copy of the full data frame would be made and the new variable would be appended to it. The `data.table` **does not make a copy when appending!**
 
 ```R
 DT[,w:=x^2]
@@ -296,4 +376,32 @@ DT[,w:=x^2]
 ## 1:  1.91827920 a  1.856464505 3.6797951076
 ## 2: -1.65494906 a  0.002909822 2.7388564037
 ## 3: -0.01420802 a -1.219338098 0.0002018679
+
+DT[,m := {tmp <- (x+z); log2(tmp+5)}] ## Use expressions to append more complex variables
+head(DT,3)
+
+##              x y            z            w        m
+## 1:  1.91827920 a  1.856464505 3.6797951076 3.133357
+## 2: -1.65494906 a  0.002909822 2.7388564037 1.743283
+## 3: -0.01420802 a -1.219338098 0.0002018679 1.913207
 ```
+
+### Summarizing data
+
+There are useful functions for summarizing data before doing any operations with it:
+
+* `head` and `tail` work as the bash commands. They also receive an `n` parameter.
+* `summary` makes a summary (woah) of the data.
+* `str` gives a structured representation of an R object.
+* `quantile` is obvious. A `probs` parameter can be given to change the percentiles to be returned.
+* `table` creates a table with the frequency of each value in an object. Use `useNA="ifany"` to take into account the NA values. Two-dimensional tables can also be created by passing a second variable.
+* `is.na` allows to check for NA values.
+* Use `any` as you would in Python. `all` can also be used.
+* `colSums` and `rowSums` do exactly what their names suggest.
+* Use `%in%` to check whether elements in one vector appear in another one.
+* Use `object.size` and `print(object.size(obj), units="Mb")` to see the size of (you guessed it) an object.
+
+
+
+
+
