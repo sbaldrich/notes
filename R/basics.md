@@ -1,3 +1,31 @@
+## Functions
+
+In R, functions are defined by using the `function` directive and are **first class objects**. The return value of the function is the value of the last expression in the function body.
+
+```R
+f <- function(arg1 = NULL, arg2 = 10){ ## Default values and named parameters are ok to use
+  ## Something really cool
+}
+```
+
+Arguments to functions are evaluated **lazily**:
+
+```R
+g <- function(x,y){
+	x^2
+}
+
+g(2) ## This won't produce any error since y was never needed.
+```
+
+Use an ellipsis whenever the number of arguments cannot be known in advance:
+
+```R
+args(paste)
+function(..., sep= " ", collapse = NULL) ## Notice that args after the ... must be named on function calls.
+```
+
+
 ## Loop functions
 
 ### `lapply` and `sapply`
@@ -56,19 +84,7 @@ apply(x, 1, quantile, c(0.25, 0.5, 0.75))
 ## [,10]       [,11]       [,12]
 ## 25% -0.2468998 -0.05331366 -0.07723868
 ## 50%  0.7201212  0.23441194  0.28756834
-## 75%  1.1693685  1.03758764  0.80338771
-## [,13]      [,14]         [,15]
-## 25% -0.5166430 -1.1257728 -1.5978577112
-## 50%  0.7758219 -0.2901696  0.0002375202
-## 75%  1.4961718  0.3093578  0.7169169273
-## [,16]       [,17]       [,18]
-## 25% -0.7802628 -0.94697621 -1.29861844
-## 50%  0.1956188  0.06379559 -0.50877237
-## 75%  0.6749682  1.14786492  0.01926205
-## [,19]      [,20]
-## 25% -0.04754956 -1.2580690
-## 50%  0.71227253 -0.3729704
-## 75%  0.95471290  0.2537855
+## ...
 ```
 
 ### `mapply`
@@ -195,4 +211,89 @@ sample(1:10, 4)
 
 sample(1:10, replace=TRUE)
 ##  1 3 3 3 7 5 7 6 2 6
+```
+
+# Getting and cleaning data
+
+Some useful functions for getting data:
+
+* `file.download`: Download a file from a given url. (use `method="curl"` on OSX, sometimes "wb" is necessary on Windows, see *getdata/quiz1.md*)
+* `read.csv`: Read a csv file.
+* `library(xlsx)`: Utilities for reading Excel files. (See *getdata/quiz1.md*)
+* `library(XML)`: Utilities for reading and processing XML files. `xmlSApply` and `xpathSApply` are particularly useful.
+
+
+### data.table
+
+`data.table` inherits from `data.frame`, is written in C and is much faster. They can be created just like data frames:
+
+```R
+library(data.table)
+DF = data.frame(x=rnorm(9), y = rep(c("a","b","c"), each=3), z = rnorm(9))
+
+##            x y          z
+## 1  2.2011118 a -2.3554687
+## 2 -0.5477701 a  1.7970621
+## 3 -1.1049003 a -0.2485105
+
+DT = data.table(x=rnorm(9), y = rep(c("a","b","c"), each=3), z = rnorm(9))
+head(DT,3)
+
+##              x y            z
+## 1:  1.91827920 a  1.856464505
+## 2: -1.65494906 a  0.002909822
+## 3: -0.01420802 a -1.219338098
+```
+
+##### Subsetting rows:
+
+```R
+DT[2,]
+
+##            x y           z
+## 1: -1.654949 a 0.002909822
+
+DT[DT$y=="a",]
+
+##              x y            z
+## 1:  1.91827920 a  1.856464505
+## 2: -1.65494906 a  0.002909822
+## 3: -0.01420802 a -1.219338098
+
+DT[c(2,3)] ## Subsetting using only one index uses rows
+
+##              x y            z
+## 1: -1.65494906 a  0.002909822
+## 2: -0.01420802 a -1.219338098
+```
+
+##### Subsetting colums:
+
+Use expressions (statements between curly brackets) to subset columns:
+
+```R
+DT[, list(mean(x),sum(z))] ## The data table knows which variables are refered
+
+##           V1        V2
+## 1: -0.221905 -2.110566
+
+DT[,table(y)]
+
+## y
+## a b c 
+## 3 3 3
+
+```
+
+##### Append colums:
+
+Use `:=` to add a new variable to a `data.table`. Using a `data.frame`, a copy of the full data frame would be made and the new variable would be appended to it. The `data.table` *does not make a copy when appending!**
+
+```R
+DT[,w:=x^2]
+
+##              x y            z            w
+## 1:  1.91827920 a  1.856464505 3.6797951076
+## 2: -1.65494906 a  0.002909822 2.7388564037
+## 3: -0.01420802 a -1.219338098 0.0002018679
 ```
