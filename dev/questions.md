@@ -9,3 +9,12 @@
 ### How to do a distributed build in maven?
 
 ### How to do distributed testing in maven?
+
+### What are the characteristics of a safe application? (rephrase)
+
+* Visibility
+* Fault isolation
+* Fault tolerance (Circuit breakers, bulkheads, etc.)
+* Automatic recovery
+
+### What are the benefits of a microservices architecture?

@@ -1,7 +1,7 @@
 ### What's wrong with the classic monolith?
 
 * Developers can't confidently make changes to the application because it is far too intimidating
-* Scaling the application can be a challenge (*e.g.* different infrastructure needs for different parts of the application -> the hardware is not easy to find)
+* Scaling the application can be a challenge (*e.g.* different infrastructure needs for different parts of the application -> the hardware is not easy to find). Scaling a component means scaling *all* components, not only those under heavy load.
 * Long-term commitment to a particular technology stack.
 
 ### Microservices
@@ -35,6 +35,7 @@
 * Always do the partition with the Single-reponsibility principle in mind
 * Package together things that change at the same time and for the same reasons
 * Take UNIX utilities as an example (do one thing right)
+* The smallest *atomic* unit of service that delivers business value.
 
 > **Goal:** Most changes affect only one service
 
