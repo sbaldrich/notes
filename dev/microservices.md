@@ -120,6 +120,29 @@ Avoid updating the database, just *publish and event*
 
 You should use CQRS. Basically you must define the queries you want to support and have a view database that is in charge of providing these queries. It is subscribed to the relevant events and changes according to them.  
 
+#### Microservices Chassis
+
+There are some **cross-cutting concerns**:
+
+* External configuration
+  * Network locations of external services, credentials, etc.
+  * Different for different environments.
+  * Static vs. dynamically configurable vs configuration service
+* Logging
+* Service Discovery
+* Circuit breaker
+  * Declarative execution of methods using CB
+* Health checks
+  * Health check URL, e.g. GET / health
+  * Extensible to support application component status
+* Metrics
+  * *e.g.,* GET / *codahalemetrics*
+  * Reporting to metrics collection service
+
+On a monolithic application this only has to be done **once**, how to do it on a *Microservice-oriented* architecture?
+
+* **Spring Boot + Spring Cloud**
+* Dropwizard
 
 ### References
 * [The Art of Scalability - Abbott, Fischer](http://www.amazon.com/The-Art-Scalability-Architecture-Organizations/dp/0137030428)
