@@ -54,6 +54,76 @@
 * Develop new functionalities as microservices -> **stop digging the hole!**
 * Incrementally migrate your old code into services.
 
+
+## Command Query Responsibility Segregation - (CQRS)
+
+#### Limitations of RDBMS
+
+* Scalability
+* Multi data center, distributed database
+* Schema updates
+* O/R impedance mismatch
+* Handling semi-structured data
+
+**We can use microservices and a polyglot architecture but now we have a problem with the distributed data**
+*e.g., ACID on SQL databases vs No ACID on NOSQL*
+
+##### How to maintain invariants?
+
+How to maintain the invariants across distributed databases without using a distributed transaction?
+
+**By using an event-driven architecture:**
+
+* Services *publish* events when state changes
+* Services *subscribe* to events and update their state
+  * Maintain *eventual-consistency*
+  * Synchronize databases
+
+#### Problems:
+
+* How to design a domain model based on event sourcing? (**DDD**)
+* How to atomically do the db-write and event publishing?
+  * ~~2PC~~
+  * Transaction log tailing
+    * read the database "*transaction log*" and publish the message to the message-broke
+    * LinkedIn databus
+    * AWS DynamoDB streams
+    * MongoDB `oplog`
+
+#### Event Sourcing
+
+Avoid updating the database, just *publish and event*
+
+* For each aggregate (entity)
+  * Identify state-changing domain events
+  * Define Event Classes
+* Persist events and **not** the current state
+* Replay events to recreate state (and periodically *snapshot* to avoid loading all events)
+**The present is a fold over history**
+
+#### Benefits
+* Solves the data consistency issues in Microservices/NoSQL-based architecture
+* Reliable event publishing
+* Eliminates O/R mapping problem
+* Reifies state changes
+  * Built-in reliable audit log
+  * Temporal queries
+
+#### Drawbacks
+* Application rewrite and unfamiliar style of programming
+* Detect and handle duplicate events
+* Event store only supports PK lookups
+  * Must use CQRS to handle queries
+  * Application must handle eventually consistent data
+
+#### Queries in an Event-Sourced application
+
+You should use CQRS. Basically you must define the queries you want to support and have a view database that is in charge of providing these queries. It is subscribed to the relevant events and changes according to them.  
+
+
 ### References
 * [The Art of Scalability - Abbott, Fischer](http://www.amazon.com/The-Art-Scalability-Architecture-Organizations/dp/0137030428)
 * [microservices.io](http://microservices.io)
+* [eventuate.io](http://eventuate.io)
+* [ebay-base](http://bit.ly/ebaybase)
+* [CQRS - Fowler](http://martinfowler.com/bliki/CQRS.html)

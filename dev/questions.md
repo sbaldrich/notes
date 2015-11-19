@@ -18,3 +18,7 @@
 * Automatic recovery
 
 ### What are the benefits of a microservices architecture?
+
+### What does *anti-fragility* mean?
+
+The system gets stronger whenever subjected to high load.
