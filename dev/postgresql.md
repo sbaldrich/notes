@@ -1,5 +1,14 @@
-### Postgresql
+## Notes about PostgreSQL
+1. [Reload configuration without restarting the server](#reload)
+1. [Get the disk space used by some objects in human-readable format](#diskusage)
 
+<a name="reload"></a>
+##### Reload configuration without restarting the server
+
+* **Option 1:** `su postgres /usr/bin/pg_ctl reload`
+* **Option 2:** `SELECT  pg_reload_conf();` 
+
+<a name="diskusage"></a>
 ##### Get the disk space used by some objects in human-readable format
 
 Use `pg_size_pretty(db_object)` where `db_object` is the result of calling a database object size function:
