@@ -1,8 +1,16 @@
 ## Notes about Maven
+1. [Copying dependencies](#deps)
 1. [Jetty plugin](#jetty)
 
+<a name="deps"></a>
+### Copying dependencies of a project
+
+To get all dependencies of a project, use the `copy-dependencies` goal of the `dependency` plugin. To get the same directory structure as in the *m2* repo, use `-Dmdep.useRepositoryLayout` and to copy pom files too, use `-Dmdep.copyPom`
+
+**e.g.:** `mvn clean dependency:copy-dependencies -Dmdep.useRepositoryLayout -Dmdep.copyPom`
+
 <a name="jetty"></a>
-#### Using the Maven Jetty Plugin
+### Using the Maven Jetty Plugin
 
 ##### Set up
 
