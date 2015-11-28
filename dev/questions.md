@@ -16,6 +16,7 @@
 * Fault isolation
 * Fault tolerance (Circuit breakers, bulkheads, etc.)
 * Automatic recovery
+* Anti-fragility
 
 ### What are the benefits of a microservices architecture?
 
