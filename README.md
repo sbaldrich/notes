@@ -11,6 +11,11 @@ Notes about things I don't want to forget.
 * dev
   * Notes about Software Development
   * Solutions to problems I've encountered
+* math
+  * Notes on _wait for it..._ _..._ math.
+
+## Using the virtual Jupyter server
+`ssh` into the *notebook* box and run `ipython notebook --ip=0.0.0.0`.
 
 ## Disclaimer
 
