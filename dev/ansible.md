@@ -5,6 +5,7 @@
 1. [Patterns](#patterns)
 1. [*ad-hoc* commands](#adhoc)
 1. [Playbooks](#playbooks)
+1. [Roles](#roles)
 
 
 Ansible is a configuration management tool that allows to automate IT tasks. It is *agent-less* and works over OpenSSH or *paramiko* (when necessary).
@@ -17,6 +18,7 @@ Ansible is a configuration management tool that allows to automate IT tasks. It 
 * Use the `all` or `*` pattern to target all hosts in the inventory. Negations, conjunctions and disjunctions are also possible, *e.g.,* `ansible web:db:&staging:!phoenix`
 
 * You can set the number of forks of an ad-hoc command using the `-f` flag, *e.g.,* `ansible north-zone -a "/sbin/reboot" -f 10` will reboot all the hosts in the north zone, ten hosts at a time.
+* If you're not using roles, you should be.
 
 <a name="inventory"></a>
 ## Inventory
@@ -117,3 +119,51 @@ handlers:
     - name: restart apache
       service: name=apache state=restarted
 ```
+<a name="roles"></a>
+## Roles
+
+Roles are a way of organizing playbooks that improves organization and reuse. Basically, you set up a directory structure as:
+
+```yaml
+site.yml          # Say, a playbook for deploying
+webservers.yml    # The main webservers playbook, it invokes roles.
+databases.yml
+cluster.yml
+roles/
+  common/     # Files that describe the "common" role
+    files/      # Any 'copy' task in "common" can refer to files in here without the path
+    templates/
+    tasks/      # Anything inside main.yml will be added to the play. This applies to handlers and vars too.
+    handlers/
+    vars/
+    defaults/
+    meta/
+  webservers/     # Files that describe the "webservers" role
+    files/
+    templates/
+    ...
+```
+
+And the `webservers` playbook could look as follows:
+
+```yaml
+---
+- hosts: webservers
+  roles:
+    - common
+    - webservers
+```
+
+Now, this structure will define a behavior where all the **main.yml** files inside the *tasks*, *handlers* and *vars* folders will be added to the play. Additionally, all `copy` and `template` tasks can reference files inside the *files* and *templates* directories without specifying the full path and any `include` task can reference files in *tasks* without having to describe their path.
+
+Roles can also be parameterized:
+
+```yaml
+---
+- hosts: webservers
+  roles:
+    - common
+    - {role: foo_role, dir: '/opt/dir', port: 5555}
+``` 
+
+In conclusion, **use roles**. ಠ_ಠ
