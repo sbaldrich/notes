@@ -12,4 +12,4 @@ I tested this particular regex on `vim`. I had to change some strings with the f
 
 <a name="non-capturinggroups"></a>
 ### Using non-capturing groups
-Sometimes it is necessary to choose between strings in a particular regex. Using parentheses would be useful but this creates a capturing group. To avoid it use the `(?:<<ex1|ex2|...|exN)` syntax. For example, `(?:black|straw)berry` would match *blackberry* and *strawberry*.
+Sometimes it is necessary to choose between strings in a particular regex. Using parentheses would be useful but this creates a capturing group. To avoid it use the `(?:ex1|ex2|...|exN)` syntax. For example, `(?:black|straw)berry` would match *blackberry* and *strawberry*.
