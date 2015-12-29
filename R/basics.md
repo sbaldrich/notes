@@ -1,4 +1,18 @@
-## Subsetting and Sorting
+## Notes on the basics of R
+1. [Pro-tips](#protips)
+1. [Subsetting and sorting data frames](#dataframe)
+1. [Functions](#functions)
+	1. [Loop Functions](#lfunctions) 
+1. [data.table](#datatable)
+1. [Miscellaneous](#misc)
+
+<a name="protips"></a>
+### Pro-tips
+
+* Always set the seed when creating a script with reproducible results.
+
+<a name="dataframe"></a>
+### Subsetting and Sorting
 
 ```R
 set.seed(13435)
@@ -78,7 +92,8 @@ Y <- rbind(X, 1:3) ## Append a new row. Invert the parameter order for prepend.
 
 ```
 
-## Functions
+<a name="functions"></a>
+### Functions
 
 In R, functions are defined by using the `function` directive and are **first class objects**. The return value of the function is the value of the last expression in the function body.
 
@@ -105,11 +120,12 @@ args(paste)
 function(..., sep= " ", collapse = NULL) ## Notice that args after the ... must be named on function calls.
 ```
 
+<a name="lfunctions"></a>
+#### Loop functions
 
-## Loop functions
-
-### `lapply` and `sapply`
+##### `lapply` and `sapply`
 Apply a function to all elements in a list and return the result. This result depends on the `*apply` function that is used. For example, `lapply` returns a vector with the computed values and `sapply` simplifies the results if possible *i.e.,* if the result of applying the given function to each element of the input list always returns a vector of size 1, `sapply` returns a vector with the results. If the function returns a set of vectors of the same size, a matrix is returned.
+
 ```R
 x <- list(a = 1:5, b=rnorm(10))
 lapply(x,mean)
@@ -125,7 +141,7 @@ sapply(x, function(y) y[1,]) #An anonymous function that extracts the first row
 ## [2,] 3 4
 ```
 
-### `apply`
+##### `apply`
 Apply a function over some dimensions (a margin) of a vector or matrix. It can be used with more than 2 dimensions.
 
 ```R
@@ -167,7 +183,7 @@ apply(x, 1, quantile, c(0.25, 0.5, 0.75))
 ## ...
 ```
 
-### `mapply`
+##### `mapply`
 
 Multivariate apply. Uses the arguments of multiple lists to call a function.
 
@@ -186,7 +202,7 @@ mapply(rnorm, 1:3, 1:3, 2)
 ## [1] 0.6485012 3.7339094 1.6486525
 ```
 
-### `tapply`
+##### `tapply`
 
 Apply a function over subsets of a vector.
 
@@ -202,7 +218,7 @@ tapply(x, f, mean)
 ## -0.4175986  0.6728019  1.2356494 
 ```
 
-### `split`
+##### `split`
 
 Split a vector into subsets determined by a factor or a list of factors.
 
@@ -236,73 +252,7 @@ sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE)
 ## Wind     11.62258  10.26667   8.941935   8.793548  10.18000
 ```
 
-## `str` function
-
-Compactly display the inner structure of R objects.
-
-```R
-x <- rnorm(100, 10)
-str(x)
-
-## num [1:100] 8.38 9.09 9.08 10.15 9.59 ...
-
-library(datasets)
-str(airquality)
-
-## 'data.frame':	153 obs. of  6 variables:
-## $ Ozone  : int  41 36 12 18 NA 28 23 19 8 NA ...
-## $ Solar.R: int  190 118 149 313 NA NA 299 99 19 194 ...
-## $ Wind   : num  7.4 8 12.6 11.5 14.3 14.9 8.6 13.8 20.1 8.6 ...
-## $ Temp   : int  67 72 74 62 56 66 65 59 61 69 ...
-## $ Month  : int  5 5 5 5 5 5 5 5 5 5 ...
-## $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...
-
-m <- matrix(rnorm(100), 10, 10)
-str(m)
-## num [1:10, 1:10] -0.0393 1.1132 2.1891 -0.1054 0.3433 ...
-
-```
-
-## Simulation
-
-### Generating Random Numbers
-
-##### Functions for probability distributions
-
-Probability distributions have four associated functions prefixed with:
-
-* `d`: density
-* `r`: random number generation
-* `p`: cumulative distribution
-* `q`: quantile
-
-*e.g.,* `dnorm, rnorm, pnorm, qnorm, rpois, qpois`
-
-*Remember to always set the seed (`set.seed`) to ensure reproducibility*
-
-##### Random Sampling
-
-Use `sample` to randomly draw from a set scalar objects.
-
-```R
-set.seed(10)
-sample(1:10, 4)
-##  6 3 4 5
-
-sample(1:10, replace=TRUE)
-##  1 3 3 3 7 5 7 6 2 6
-```
-
-# Getting and cleaning data
-
-Some useful functions for getting data:
-
-* `file.download`: Download a file from a given url. (use `method="curl"` on OSX, sometimes "wb" is necessary on Windows, see *getdata/quiz1.md*)
-* `read.csv`: Read a csv file.
-* `library(xlsx)`: Utilities for reading Excel files. (See *getdata/quiz1.md*)
-* `library(XML)`: Utilities for reading and processing XML files. `xmlSApply` and `xpathSApply` are particularly useful.
-
-
+<a name="datatable"></a>
 ### data.table
 
 `data.table` inherits from `data.frame`, is written in C and is much faster. They can be created just like data frames:
@@ -386,6 +336,74 @@ head(DT,3)
 ## 3: -0.01420802 a -1.219338098 0.0002018679 1.913207
 ```
 
+<a name="misc"></a>
+### `str` function
+
+Compactly display the inner structure of R objects.
+
+```R
+x <- rnorm(100, 10)
+str(x)
+
+## num [1:100] 8.38 9.09 9.08 10.15 9.59 ...
+
+library(datasets)
+str(airquality)
+
+## 'data.frame':	153 obs. of  6 variables:
+## $ Ozone  : int  41 36 12 18 NA 28 23 19 8 NA ...
+## $ Solar.R: int  190 118 149 313 NA NA 299 99 19 194 ...
+## $ Wind   : num  7.4 8 12.6 11.5 14.3 14.9 8.6 13.8 20.1 8.6 ...
+## $ Temp   : int  67 72 74 62 56 66 65 59 61 69 ...
+## $ Month  : int  5 5 5 5 5 5 5 5 5 5 ...
+## $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...
+
+m <- matrix(rnorm(100), 10, 10)
+str(m)
+## num [1:10, 1:10] -0.0393 1.1132 2.1891 -0.1054 0.3433 ...
+
+```
+
+### Simulation
+
+#### Generating Random Numbers
+
+##### Functions for probability distributions
+
+Probability distributions have four associated functions prefixed with:
+
+* `d`: density
+* `r`: random number generation
+* `p`: cumulative distribution
+* `q`: quantile
+
+*e.g.,* `dnorm, rnorm, pnorm, qnorm, rpois, qpois`
+
+*Remember to always set the seed (`set.seed`) to ensure reproducibility*
+
+##### Random Sampling
+
+Use `sample` to randomly draw from a set scalar objects.
+
+```R
+set.seed(10)
+sample(1:10, 4)
+##  6 3 4 5
+
+sample(1:10, replace=TRUE)
+##  1 3 3 3 7 5 7 6 2 6
+```
+
+### Getting and cleaning data
+
+Some useful functions for getting data:
+
+* `file.download`: Download a file from a given url. (use `method="curl"` on OSX, sometimes "wb" is necessary on Windows, see *getdata/quiz1.md*)
+* `read.csv`: Read a csv file.
+* `library(xlsx)`: Utilities for reading Excel files. (See *getdata/quiz1.md*)
+* `library(XML)`: Utilities for reading and processing XML files. `xmlSApply` and `xpathSApply` are particularly useful.
+
+
 ### Summarizing data
 
 There are useful functions for summarizing data before doing any operations with it:
@@ -400,8 +418,3 @@ There are useful functions for summarizing data before doing any operations with
 * `colSums` and `rowSums` do exactly what their names suggest.
 * Use `%in%` to check whether elements in one vector appear in another one.
 * Use `object.size` and `print(object.size(obj), units="Mb")` to see the size of (you guessed it) an object.
-
-
-
-
-
