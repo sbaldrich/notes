@@ -336,6 +336,11 @@ head(DT,3)
 ## 3: -0.01420802 a -1.219338098 0.0002018679 1.913207
 ```
 
+
+##### Sort by variable:
+
+Data tables can be sorted by using `order(var)` with `var` being the variable you want to order rows with.
+
 <a name="misc"></a>
 ### `str` function
 
