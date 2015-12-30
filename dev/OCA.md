@@ -1,6 +1,7 @@
 ## Study notes for the OCA Exam
 1. [Basics](#basics)
 2. [Operators and Statements](#operators)
+2. [Core Java APIs](#core)
 
 <a name="basics"></a>
 ### Basics (*the java building blocks*)
@@ -40,3 +41,24 @@
 * Labels can be used on any block statement (although why would you use a label with an `if` statement?)
 
 **Exam tip:** Always verify whether the code compiles or not before looking for more complicated answers.
+
+<a name="core"></a>
+### Core Java APIs
+
+* When using the `+` operator, all elements are evaluated from left to right and if either operand is a `String`, the result is a `String`, *e.g.,* `1 + 3 + "5" == "45"`.
+* Literal `String`s go in the String pool.
+* Always remember that `String`s are immutable.
+* You can declare and initialize array anonymously: `int[] array = {1,2,3,4}` (see? no type on the right-hand side of the assignment).
+* `java.util.Arrays.binarySearch` returns the negative of the index where the searched element should be inserted minus 1 whenever the searched value can't be found. Remember its behavior is unpredictable on unsorted arrays.
+* The `remove` method behaves funny when invoked with an `int` because of *autoboxing*.
+* The `asList()` method from `Arrays` returns a **backed list** (*when the array changes the list does too*), this means the size of the list cannot change among other things. It receives *varargs*, so `Arrays.asList("hello", "my", "darling")` is legal.
+* `LocalDate`, `LocalTime` and `LocalDateTime` objects **should be created using the static methods `of` or `now`**, the constructors are `private`. `LocalDateTime` objects can be created using a `LocalDate` and `LocalTime`.
+* Date and time classes are immutable.
+* Give a look at the `java.time.*` classes, they're quite nice.
+* Don't try to chain methods for `Period` construction. The `of...` methods are static so you'll end up with the result of the last call.
+* The `DateTimeFormatter`'s `format` method can only be used if the date/time/datetime object contains the data relevant for the formatter (*don't use a time formatter with only a date*). Remember the datetime classes also contain a `format` that receives the formatter as argument.
+* Create a date/time object from a `String` using the `parse` method and optionally a formatter.
+* Calling `==` on `String` objects will check whether they point to the same object in the
+String pool.
+
+**Exam tip:** Write some programs to practice using the new Date and Time API.
