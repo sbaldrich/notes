@@ -1,7 +1,8 @@
 ## Study notes for the OCA Exam
 1. [Basics](#basics)
-2. [Operators and Statements](#operators)
-2. [Core Java APIs](#core)
+1. [Operators and Statements](#operators)
+1. [Core Java APIs](#core)
+1. [Methods and Encapsulation](#methods)
 
 <a name="basics"></a>
 ### Basics (*the java building blocks*)
@@ -10,7 +11,7 @@
 * You can use *varargs* in the `main` method's signature.
 * Watch out for ambiguous imports **e.g.,** importing `java.util.Date` and `java.sql.Date`.
   * Java resolves the conflicts by honoring the most specific import (when possible).
-* **Initialization order**: Field initializers and instance initializers in the order they are found and then the constructor.
+* **Initialization order**: Superclass initialization, static variables declaration and static initializers in the order they are found, instance variables declararations and instance initializers in the order they are found and then the constructor.
 * The underscores in numeric literals (Java 7+) can appear anywhere but in the start, end or next to a dot in a literal.
 * `strictfp` and `native` are *keywords* you probably don't remember.
 * Identifiers must start with a letter or the symbols `$` or `_`.
@@ -62,3 +63,16 @@
 String pool.
 
 **Exam tip:** Write some programs to practice using the new Date and Time API.
+
+<a name="methods"></a>
+### Methods and Encapsulation
+
+* There can be a maximum of one *vararg* parameter in a method.
+* `protected` access is the same as the default access (package) plus the access by subclasses.
+* A call to a static variable on a reference won't cause a `NullPointerException` even if the reference is currently `null`. Java uses the type of the reference to infer the variable we are refering to.
+*  Java always calls the most specific method possible when it has more than one option, exact match is preferred, then wider primitives, then autoboxing and then *varargs*. Also, **only one conversion** is made, **e.g.,** an `int` won't be converted to `Long` in order to accomodate it to a method signature.
+* `final` variables must be assigned a value exactly once. Even in a static initializer, the second assignment will fail. By the time the constructor completes, all `final` instance variables must have been set.
+* Java 8 has a functional interface `Predicate<T>` that declares a method `test` that returns a `boolean`.
+* If inside a constructor there is a call to another constructor, this call must be the first statement in the constructor.
+
+**Exam tip:** Always identify whether fields and methods are *accessible* and watch out for non-properly encapsulated fields (**e.g.,** *returning the private reference*).
