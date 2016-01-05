@@ -3,6 +3,7 @@
 1. [Operators and Statements](#operators)
 1. [Core Java APIs](#core)
 1. [Methods and Encapsulation](#methods)
+1. [Class Design](#class)
 
 <a name="basics"></a>
 ### Basics (*the java building blocks*)
@@ -76,3 +77,17 @@ String pool.
 * If inside a constructor there is a call to another constructor, this call must be the first statement in the constructor.
 
 **Exam tip:** Always identify whether fields and methods are *accessible* and watch out for non-properly encapsulated fields (**e.g.,** *returning the private reference*).
+
+<a name="class"></a>
+### Class Design
+
+* A method overloaded by a *subclass* must be as accessible or more accessible than the same method in the *superclass*, it also cannot throw a checked exception that is new or broader than the class of any exception thrown by the method in the *superclass*. The return value must be the same or a subclass of the return type of the method in the *superclass*. The `static` modifier must be used consistently between the methods that are part of overriding.
+* An overridden method may hide or eliminate exceptions without any problem.
+* Keep in mind the concepts of *method overloading*, *method overriding* and *method hiding*.
+* Variables can't be overriden, they are *hidden* (as static methods are).
+* An `abstract` method may only be defined within an abstract class.
+* A `private abstract` method can not be defined for somewhat obvious reasons.
+* Every variable in an interface is assumed to be `public static final`.
+* `default` method implementations are only allowed in interfaces.
+* A default method can be overriden by an abstract method in a *subinterface*.
+* Casts between types that are not related by an inheritance hierarchy are not allowed. An instance can be automatically cast to a superclass without explicit casting, to narrow an instance to a subclass, an explicit cast is required. A `ClassCastException` will be thrown if the instance does not correspond to the type is is being cast to.
