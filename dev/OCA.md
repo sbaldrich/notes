@@ -4,6 +4,7 @@
 1. [Core Java APIs](#core)
 1. [Methods and Encapsulation](#methods)
 1. [Class Design](#class)
+1. [Exceptions](#exceptions)
 
 <a name="basics"></a>
 ### Basics (*the java building blocks*)
@@ -12,7 +13,7 @@
 * You can use *varargs* in the `main` method's signature.
 * Watch out for ambiguous imports **e.g.,** importing `java.util.Date` and `java.sql.Date`.
   * Java resolves the conflicts by honoring the most specific import (when possible).
-* **Initialization order**: Superclass initialization, static variables declaration and static initializers in the order they are found, instance variables declararations and instance initializers in the order they are found and then the constructor.
+* **Initialization order**: Superclass initialization, static variables declaration and static initializers (once when the class is loaded) in the order they are found, instance variables declararations and instance initializers in the order they are found and then the constructor.
 * The underscores in numeric literals (Java 7+) can appear anywhere but in the start, end or next to a dot in a literal.
 * `strictfp` and `native` are *keywords* you probably don't remember.
 * Identifiers must start with a letter or the symbols `$` or `_`.
@@ -91,3 +92,13 @@ String pool.
 * `default` method implementations are only allowed in interfaces.
 * A default method can be overriden by an abstract method in a *subinterface*.
 * Casts between types that are not related by an inheritance hierarchy are not allowed. An instance can be automatically cast to a superclass without explicit casting, to narrow an instance to a subclass, an explicit cast is required. A `ClassCastException` will be thrown if the instance does not correspond to the type is is being cast to.
+
+<a name="exceptions"></a>
+### Exceptions
+
+* Java enforces the *handle or declare rule* for checked exceptions.
+* If it is impossible to reach a `catch` block, the code will not compile. This can happen when the `catch` block of a particular type of exception is preceded by a `catch` of a supertype.
+* Overloaded methods can't declare (or throw) new checked exceptions. Also, they can remove from the method signature the checked (unchecked exceptions do not matter) exceptions declared in the *superclass*.
+
+**Exam tip:** Watch out for code that doesn't compile because of unreachable `catch` blocks.
+
