@@ -16,6 +16,13 @@ Some bang shortcuts:
 * `!$`: run the last word of the previous command
 * `^foo^bar`: run the previous command replacing *foo* with *bar*.
 
+### Process substitution
+
+Use process substitution to pipe the *stdout* of multiple commands or process the output of a command without creating a subshell.
+
+```
+while read line; do echo $line; done < <(ls -l /etc/init.d)
+```
 ## ssh
 <a name="ssh"></a>
 
