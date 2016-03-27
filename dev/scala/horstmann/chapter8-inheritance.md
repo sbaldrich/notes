@@ -6,6 +6,8 @@
   * Use `obj.isInstanceOf[Class]`, `obj.asInstanceOf[Class]` and `classOf[Class]` to check whether `obj` is an instance or subclass and to get `obj` as a `Class`, which works only if indeed `obj` is a subclass of `Class`.
   * `protected` members are not visible throughout the package. `protected[this]` restricts access to the current object, in a similar way that `private[this]` does.
 
+### Exercises
+
 > (1) Extend the following `BankAccount` class to a `CheckingAccount` class that charges $1 for every deposit and withdrawal.
 
 ```scala

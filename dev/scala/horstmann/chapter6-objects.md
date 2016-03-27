@@ -9,6 +9,8 @@
   * There are no plain `enums` in Scala, use an object that extends `Enumeration` and
     initialize the values with a call to `Value`. *See the ABN section*.
 
+### Exercises
+
 > (1) Write an object Conversions with methods inchesToCentimeters, gallonsToLiters, and milesToKilometers.
 
 ```scala

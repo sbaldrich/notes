@@ -5,6 +5,8 @@
   * Use `getOrElse(key, def)` to get a default value (`def`) when a key is not available
   * Java Map implementations can be used by taking advantage of the `scala.collection.JavaConversions` package.
 
+### Exercises
+
 > (1) Set up a map of prices for a number of gizmos that you covet. Then produce a second map with the same keys and the prices at a 10 percent discount
 
 ```scala

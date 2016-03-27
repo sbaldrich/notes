@@ -6,7 +6,7 @@
 * Use """...""" for raw regex syntax.
 * Use `@SerialVersionUID(aLong)` and `extends Serializable` to enable serialization.
 
-#### Exercises
+### Exercises
 
 > (1) Write a Scala code snippet that reverses the lines in a file (making the last line the first one, and so on).
 

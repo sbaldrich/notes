@@ -6,7 +6,9 @@
   * Use `@BeanProperty` to generate the usual JavaBean methods.
   * Nested classes are possible, take a look at the bottom of this file.
 
-  > (1) Improve the Counter class in Section 5.1, “Simple Classes and Parameterless Methods,” on page 49 so that it doesn’t turn negative at Int.MaxValue.
+### Exercises
+
+> (1) Improve the Counter class in Section 5.1, “Simple Classes and Parameterless Methods,” on page 49 so that it doesn’t turn negative at Int.MaxValue.
 
 ```scala
 class Counter(private var value : Int = 0){
