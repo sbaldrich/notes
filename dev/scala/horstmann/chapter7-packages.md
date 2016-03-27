@@ -9,18 +9,26 @@
   * Wildcard imports work as a java `import package.*` plus `import static`
   * It is possible to rename or hide fields. See the brief note for this chapter.
 
+> (3) Write a package random with functions nextInt(): Int, nextDouble(): Double, and setSeed(seed: Int): Unit. To generate random numbers, use the linear congruential generator
+`next = (previous × a + b) mod 2^n`,
+where `a = 1664525`, `b = 1013904223`, `n = 32`, and the initial value of previous is seed.
+
 ```scala
 package object random {
 	private var next = 1
-
-  def nextInt(): Int = {next = (next * 1664525 + 1013904223) % math.pow(2, 32).toInt; next}
+  def nextInt(): Int = {
+    next = (next * 1664525 + 1013904223) % math.pow(2, 32).toInt
+    next
+  }
 
   def nextDouble(): Double = nextInt
 
-  def setSeed(seed: Int) = {next = seed}
+  def setSeed(seed: Int){
+    next = seed
+  }
 }
 
-package random {}
+package random{}
 
 ```
 

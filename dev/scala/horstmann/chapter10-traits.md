@@ -6,7 +6,8 @@
 
 ### Exercises:
 
-1.
+> (1) The `java.awt.Rectangle` class has useful methods translate and grow that are unfortunately absent from classes such as `java.awt.geom.Ellipse2D`. In Scala, you can fix this problem. Define a trait `RectangleLike` with concrete methods `translate` and `grow`. Provide any abstract methods that you need for the implementation, so that you can mix in the trait like `val egg = new java.awt.geom.Ellipse2D.Double(5, 10, 20, 30) with RectangleLike`.
+
 ```scala
 trait RectangleLike {
 	this : java.awt.geom.Ellipse2D.Double =>
@@ -14,8 +15,8 @@ trait RectangleLike {
 	def grow(h : Int, v : Int) { setFrame(getX, getY, getWidth + v, getHeight + h) }
 }
 ```
+> (2) Define a class `OrderedPoint` by mixing `scala.math.Ordered[Point]` into `java.awt.Point`. Use lexicographic ordering, i.e. (x, y) < (x’, y’) if x < x’ or x = x’ and y < y’.
 
-2. 
 ```scala
 import scala.math.Ordered
 import java.awt.Point
@@ -29,36 +30,35 @@ class OrderedPoint(x: Int, y:Int) extends Point(x,y) with Ordered[Point]{
 	}
 }
 ```
-4.
+> (4) Provide a `CryptoLogger` trait that encrypts the log messages with the Caesar cipher. The key should be 3 by default, but it should be overridable by the user. Provide usage examples with the default key and a key of –3.
+
 ```scala
 trait Logger{
-	def log(msg : String) = {}
+  def log(msg : String) = {}
 }
 
 trait SimpleLogger extends Logger{
-	override def log(msg : String) = {
-		Console.println(msg)
-	}
+  override def log(msg : String){ Console.println(msg) }
 }
 
 trait CryptoLogger extends Logger{
-	override def log(msg : String) = { super.log(encript(msg)) }
-	def encript(message : String) = {
-		Console.println("inside crypto")
-		val shift = 3
-		message.map(x => (x + shift).toChar)
-	}
+  val shift = 3
+  override def log(msg : String) { super.log( encript(msg) ) }
+  def encript(message : String) = message.map(caesar(_).toChar).mkString
+  def caesar(char : Char) = {
+    val ret = (char.toInt - 'a') + shift
+    'a' + (if(ret < 0) 26 + ret % 26 else ret % 26)
+  }
 }
 
 class Example extends Logger{
-	def fun() = log("abcdefghijklmnopqrstuvwxyz")
+  def fun(message : String) = log(message)
 }
 
-val example = new Example with SimpleLogger
-example.fun
-val cryptoExample = new Example with SimpleLogger with CryptoLogger
-cryptoExample.fun
+(new Example with SimpleLogger with CryptoLogger).fun("abcde") //defgh
+(new Example with SimpleLogger with CryptoLogger {override val shift = -3}).fun("abcde") //xyzab
 ```
+
 
 
 ### A Brief note on Traits
