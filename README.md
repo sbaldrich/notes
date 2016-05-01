@@ -1,6 +1,6 @@
 ## Notes
 
-Notes about things I don't want to forget.
+Memory is unreliable, this is my notebook.
 
 ## Contents
 
@@ -16,8 +16,12 @@ Notes about things I don't want to forget.
   * Notes on _wait for it..._ _..._ math.
 
 ## Using the virtual Jupyter server
-`ssh` into the *notebook* box and run `ipython notebook --ip=0.0.0.0`.
+
+* Init the vagrant box and `ssh` into it.
+* Run `dst setup base` and set up a password.
+* Run the ipython server (`sudo ipython notebook --profile=dst`)
+* *Optional:* install NLTK (`pip install nltk`). It will ask for a large download the first time you use it.
 
 ## Disclaimer
 
-I do not take any responsibility for consecuences derived from its use. I do not claim ownership for any of the problems unless specifically stated here.
+I do not take any responsibility for consecuences derived from its use. I do not claim ownership over any of the problem statements unless specifically stated otherwise.
