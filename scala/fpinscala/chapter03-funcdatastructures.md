@@ -206,3 +206,57 @@ def hasSubsequence[A](p : List[A], t : List[A]) : Boolean = (p, t) match {
   case(Cons(ph,pt), Cons(th, tt)) => if(ph == th) hasSubsequence(pt, tt) else hasSubsequence(Cons(ph, pt), tt)
 }
 ```
+
+> (25) Implement a `size` function that returns the number of nodes in a tree.
+
+```scala
+sealed trait Tree[+A]
+case class Leaf[A](value : A) extends Tree[A]
+case class Branch[A](left : Tree[A], right : Tree[A]) extends Tree[A]
+
+def size[A](tree : Tree[A]) : Int = tree match{
+  case Leaf(_)  => 1
+  case Branch( l,r) => 1 + size(l) + size(r)
+}
+```
+
+> (26) Write a function `maximum` to return the maximum number in a `Tree[Int]`.
+
+```scala
+def maximum(tree : Tree[Int]) : Int = tree match{
+  case Leaf(x) => x
+  case Branch(l, r) => maximum(l) max maximum(r)  
+}
+```
+
+> (27) Write a function `depth` to get the height of a tree.
+
+```scala
+def depth[A](tree : Tree[A]) : Int = tree match{
+  case Leaf(_) => 0
+  case Branch(l, r) => 1 + (depth(l) max depth(r))  
+}
+```
+
+> (28) Write a `map` function for trees.
+
+```scala
+def map[A,B](tree : Tree[A])(f : A => B) : Tree[B] = tree match{
+  case Leaf(x) => Leaf(f(x))
+  case Branch(l, r) => {Branch(map(l)(f), map(r)(f))}  
+}
+```
+
+> (29) Write a `fold` function that abstracts the similarities of all the functions you've written.
+
+```scala
+def fold[A,B](tree : Tree[A])(f : A => B)(g : (B, B) => B) : B = tree match{
+  case Leaf(x) => f(x)
+  case Branch(l, r) => g(fold(l)(f)(g), fold(r)(f)(g))
+}
+
+def sizeFolding[A](tree : Tree[A]) : Int = fold(tree)(x => 1)(1 + _ + _)
+def maximumFolding(tree : Tree[Int]) : Int = fold(tree)(x => x)(_ max _)
+def depthFolding[A](tree : Tree[A]) : Int = fold(tree)(x => 0)(1 + _ max _)
+def mapFolding[A,B](tree : Tree[A])(f : A => B) : Tree[B] = fold(tree)(x => Leaf(f(x)) : Tree[B])(Branch(_,_))
+```
