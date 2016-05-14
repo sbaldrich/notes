@@ -102,7 +102,7 @@ The type of the enumeration **is not** `Status`, it is `Status.Value`. It is pos
 ```scala
 object Status extends Enumeration{
   type Status = Value
-  OPEN, HALF_OPEN, CLOSED = Status
+  val OPEN, HALF_OPEN, CLOSED = Status
 }
 ```
 The type of the enumerations is now `Status.Status`, which becomes useful with an import such as `import Status._`.
