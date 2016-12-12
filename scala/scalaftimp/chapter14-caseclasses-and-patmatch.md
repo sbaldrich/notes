@@ -28,10 +28,11 @@ def swap(input : Array[Int]) = input match {
 sealed abstract class Item
 case class Article(description : String, price : Double) extends Item
 case class Bundle(description : String, discount : Double, items : Item*) extends Item
-case class Multiple(ammount : Int, items : Item*) extends Item
+case class Multiple(amount : Int, item : Item) extends Item
 
 val bundle = Bundle("The Christmas Special", 10.0, Article("Ugly Sweater", 20.0),
-  Bundle("Ancheta", 0.0, Article("Aguardiente", 10.0), Article("Gross panettone", 5.0)))
+  Bundle("Ancheta", 0.0, Article("Aguardiente", 10.0), Article("Gross panettone", 5.0),
+    Multiple(2, Article("Botella de ron", 25.0))))
 
 bundle match{
   case Bundle(_, _, Article(descr, _), _*) => descr // The description of the first Article in a Bundle
@@ -39,11 +40,11 @@ bundle match{
 
 def price(item : Item) : Double = item match {
   case Article( _, p ) => p
-  case Bundle( _, disc, its @ _* ) => its.map(price _).sum - disc
-  case Multiple(amount, item) => amount * price(item)
+  case Bundle( _, disc, its @ _* ) => its.map(price).sum - disc
+  case Multiple(amount, art) => amount * price(art)
 }
 
-price(Multiple(10, bundle))
+price(Multiple(2, bundle))
 ```
 
 > (5) A better way of modeling such trees is with case classes, write a function to calculate the sum of the leaves of a binary tree (the classes are given).

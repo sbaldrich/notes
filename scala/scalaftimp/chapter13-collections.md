@@ -10,18 +10,22 @@
 > (1) Write a function that, given a string, produces a map of the indexes of all characters. For example, `indexes("Mississippi")` should return a map associating 'M' with the set {0}, 'i' with the set {1, 4, 7, 10}, and so on. Use a mutable map of characters to mutable sets. How can you ensure that the set is sorted?
 
 ```scala
+import scala.collection.mutable.{LinkedHashMap => Map, LinkedHashSet => Set}
+
 def indexes(s : String) = {
   (Map[Char, Set[Int]]() /: s.indices) {
     (m, i) => m(s(i)) = m.getOrElse(s(i), Set()) + i; m
   }
 }
+
+indexes("Mississipi")
 ```
 > (3) Write a function that removes all zeroes from a linked list of integers.
 
 ```scala
 def rmz(list : LinkedList[Int]) = list.filterNot( _ == 0)
 ```
-> (4) Write a function that receives a collection of strings and a map from strings to integers. Return a collection of integers that are values of the map corresponding to one of the strings in the collection. For example, given `Array("Tom", "Fred", "Harry")` and `Map("Tom" -> 3,“Fred", "Harry")` and `Map("Tom" -> 3, "Dick" -> 4, "Harry" -> 5)`, return `Array(3, 5)`. Hint: Use `flatMap` to combine the Option values returned by `get`.
+> (4) Write a function that receives a collection of strings and a map from strings to integers. Return a collection of integers that are values of the map corresponding to one of the strings in the collection. For example, given `Array("Tom", "Fred", "Harry")` and `Map("Tom" -> 3, "Dick" -> 4, "Harry" -> 5)`, return `Array(3, 5)`. Hint: Use `flatMap` to combine the Option values returned by `get`.
 
 ```scala
 def f(s : Seq[String], m : Map[String, Int]) = s.flatMap(m.get(_))
